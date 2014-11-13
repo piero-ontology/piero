@@ -1,4 +1,4 @@
-# Thu Nov 13 17:45:12 JST 2014
+# Thu Nov 13 22:42:00 JST 2014
 @prefix piero:                   <http://reactionontology.org/piero/> .
 @prefix kegg:                    <http://www.kegg.jp/entry/> .
 @prefix ids:                     <http://identifiers.org/> .

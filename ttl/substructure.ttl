@@ -1,4 +1,4 @@
-# Thu Nov 13 17:45:11 JST 2014
+# Thu Nov 13 22:41:59 JST 2014
 @prefix piero:                   <http://reactionontology.org/piero/> .
 @prefix kegg:                    <http://www.kegg.jp/entry/> .
 @prefix ids:                     <http://identifiers.org/> .
@@ -4447,5 +4447,7 @@ substructure:SS01098	piero:hasParent	substructure:SS01072	.
 substructure:SS01072	piero:hasChild	substructure:SS01098	.
 substructure:SS00029	piero:hasParent	substructure:SS00001	.
 substructure:SS00001	piero:hasChild	substructure:SS00029	.
+substructure:SS00029	rdfs:label	???	.
 substructure:SS00778	piero:hasParent	substructure:SS00001	.
 substructure:SS00001	piero:hasChild	substructure:SS00778	.
+substructure:SS00778	rdfs:label	???	.
