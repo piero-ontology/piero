@@ -1,0 +1,643 @@
+# Wed Jun 25 23:37:17 JST 2014
+@prefix piero:                   <http://reactionontology.org/piero/> .
+@prefix kegg:                    <http://www.kegg.jp/entry/> .
+@prefix ids:                     <http://identifiers.org/> .
+@prefix gene_product:            <http://reactionontology.org/piero/gene_product/> .
+@prefix rdf:                     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:                    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:                     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:                     <http://www.w3.org/2002/07/owl#> .
+@prefix ro:                      <http://purl.org/obo/owl/ro#> .
+@prefix ec:                      <http://identifiers.org/ec-code/> .
+@prefix go:                      <http://identifiers.org/obo.go/GO:> .
+@prefix reaction:                <http://reactionontology.org/piero/reaction/> .
+@prefix transformation:          <http://reactionontology.org/piero/transformation/> .
+@prefix substructure:            <http://reactionontology/org/piero/substructure/> .
+@prefix substructure_conversion: <http://reactionontology.org/piero/substructure_conversion/> .
+@prefix rdm:                     <http://reactionontology.org/piero/rdm#> .
+@prefix kcfs:                    <http://reactionontology.org/piero/kcfs#> .
+@prefix iubmb:                   <http://reactionontology.org/piero/iubmb#> .
+@base                            <http://reactionontology.org/piero/> .
+
+<http://reactionontology.org/piero/> rdf:type owl:Ontology ;
+                                     rdfs:comment """
+PierO (Enzyme Reaction Ontology for Partial Information) intends to describe enzyme reactions even if the only partial information is available, aiming at the use for metabolomics studies.
+It contains hierarchical classification and ontology of functional groups and chemical substructures, which is originally obtained from BiSSCat database (http://bisscat.org/) and has been modified.
+""" .
+# {{{ Information superclasses
+piero:reaction_ontology_information rdf:type owl:Class ;
+	rdfs:subClassOf owl:Thing .
+piero:enzyme_information rdf:type owl:Class ;
+	rdfs:subClassOf owl:Thing .
+piero:reaction_information rdf:type owl:Class ;
+	rdfs:subClassOf owl:Thing .
+piero:chemical_structure_information rdf:type owl:Class ;
+	rdfs:subClassOf owl:Thing .
+# }}}
+
+# {{{   Classes
+### Object
+## Lv. 1
+piero:object
+	rdf:type owl:Class ;
+	rdfs:subClassOf owl:Thing .
+## Lv. 2
+piero:chemical_substructure
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:object .
+piero:molecule
+	rdfs:subClassOf piero:object .
+## Lv. 3
+piero:kcfs
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:chemical_structure_information ;
+	rdfs:subClassOf piero:chemical_substructure .
+piero:substructure
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:chemical_structure_information ;
+	rdfs:subClassOf piero:chemical_substructure .
+kegg:compound
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:chemical_structure_information ;
+	rdfs:subClassOf piero:molecule .
+piero:gene_product
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:enzyme_information ;
+	rdfs:subClassOf piero:molecule .
+## Lv. 4
+kcfs:atom
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:chemical_structure_information ;
+	rdfs:subClassOf piero:kcfs .
+kcfs:bond
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:chemical_structure_information ;
+	rdfs:subClassOf piero:kcfs .
+kcfs:triplet
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:chemical_structure_information ;
+	rdfs:subClassOf piero:kcfs .
+kcfs:vicinity
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:chemical_structure_information ;
+	rdfs:subClassOf piero:kcfs .
+kcfs:ring
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:chemical_structure_information ;
+	rdfs:subClassOf piero:kcfs .
+kcfs:skeleton
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:chemical_structure_information ;
+	rdfs:subClassOf piero:kcfs .
+kcfs:inorganic
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:chemical_structure_information ;
+	rdfs:subClassOf piero:kcfs .
+### Process
+## Lv. 1
+piero:process
+	rdf:type owl:Class ;
+	rdfs:subClassOf owl:Thing .
+## Lv. 2
+kegg:rclass
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:reaction_information ;
+	rdfs:subClassOf piero:process .
+kegg:rpair
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:reaction_information ;
+	rdfs:subClassOf piero:process .
+kegg:reaction
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:reaction_information ;
+	rdfs:subClassOf piero:process .
+piero:rdm
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:reaction_information ;
+	rdfs:subClassOf piero:process .
+piero:substructure_conversion
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:reaction_ontology_information ;
+	rdfs:subClassOf piero:process .
+### Molecular Function
+## Lv. 1
+piero:molecular_function
+	rdf:type owl:Class ;
+	rdfs:subClassOf owl:Thing .
+## Lv. 2
+kegg:enzyme
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:enzyme_information ;
+	rdfs:subClassOf piero:molecular_function .
+kegg:ko
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:enzyme_information ;
+	rdfs:subClassOf piero:molecular_function .
+piero:reaction
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:reaction_ontology_information ;
+	rdfs:subClassOf piero:molecular_function .
+piero:transformation
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:reaction_ontology_information ;
+	rdfs:subClassOf piero:molecular_function .
+piero:ec
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:enzyme_information ;
+	rdfs:subClassOf piero:molecular_function ;
+	owl:equivalentClass piero:enzyme_function ;
+	owl:equivalentClass ids:ec-code .
+ids:ec-code
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:molecular_function .
+piero:go
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:enzyme_information ;
+	rdfs:subClassOf piero:molecular_function ;
+	owl:equivalentClass ids:go .
+ids:go
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:molecular_function .
+piero:iubmb
+	rdf:type owl:Class ;
+	rdfs:subClassOf piero:enzyme_information ;
+	rdfs:subClassOf piero:molecular_function .
+# }}}
+
+# {{{   Object Properties
+## fgc_old
+piero:fgc_old rdf:type owl:AnnotationProperty .
+## owl/ro
+#ro:hasSynonym rdf:type owl:ObjectProperty .
+#ro:hasURI rdf:type owl:ObjectProperty .
+ro:has_part rdf:type owl:ObjectProperty .
+ro:part_of rdf:type owl:ObjectProperty .
+## RELATION
+## In Object
+# Lv. 1
+piero:inCompound rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:kcfs ;
+	rdfs:range kegg:compound .
+piero:inSubstructure rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:kcfs ;
+	rdfs:range piero:substructure .
+piero:hasKcfs rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:compound ;
+	rdfs:domain piero:substructure ;
+	rdfs:range piero:kcfs .
+## In Process
+# Lv. 1
+piero:hasRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:domain kegg:rclass ;
+	rdfs:range kegg:rpair .
+piero:inRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:rdm ;
+	rdfs:range kegg:rpair .
+piero:inReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction .
+piero:hasRclass rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:substructure_conversion ;
+	rdfs:domain piero:transformation ;
+	rdfs:range kegg:rclass .
+piero:inRclass rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:domain piero:rdm ;
+	rdfs:range kegg:rclass .
+piero:hasRdm rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:substructure_conversion ;
+	rdfs:domain kegg:rclass ;
+	rdfs:range piero:rdm .
+piero:inSubstructureConversion rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:substructure ;
+	rdfs:domain piero:rdm ;
+	rdfs:range piero:substructure_conversion .
+# Lv. 2
+piero:ForwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:inReaction .
+piero:BackwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:inReaction .
+piero:MainInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:inReaction .
+piero:CofacInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:inReaction .
+piero:LeaveInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:inReaction .
+piero:LigaseInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:inReaction .
+piero:TransInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:inReaction .
+piero:hasForwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:domain kegg:rclass ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasRpair .
+piero:hasBackwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:domain kegg:rclass ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasRpair .
+piero:hasMainRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasRpair .
+piero:hasCofacRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasRpair .
+piero:hasLeaveRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasRpair .
+piero:hasLigaseRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasRpair .
+piero:hasTransRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasRpair .
+piero:ForwardInRclass rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:rclass ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:inRclass .
+piero:BackwardInRclass rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:rclass ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:inRclass .
+# Lv. 3
+piero:MainForwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:ForwardInReaction ;
+	rdfs:subPropertyOf piero:MainInReaction .
+piero:MainBackwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:BackwardInReaction ;
+	rdfs:subPropertyOf piero:MainInReaction .
+piero:hasMainForwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasForwardRpair ;
+	rdfs:subPropertyOf piero:hasMainRpair .
+piero:hasMainBackwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasBackwardRpair ;
+	rdfs:subPropertyOf piero:hasMainRpair .
+piero:CofacForwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:ForwardInReaction ;
+	rdfs:subPropertyOf piero:CofacInReaction .
+piero:CofacBackwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:BackwardInReaction ;
+	rdfs:subPropertyOf piero:CofacInReaction .
+piero:hasCofacForwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasForwardRpair ;
+	rdfs:subPropertyOf piero:hasCofacRpair .
+piero:hasCofacBackwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasBackwardRpair ;
+	rdfs:subPropertyOf piero:hasCofacRpair .
+piero:LeaveForwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:ForwardInReaction ;
+	rdfs:subPropertyOf piero:LeaveInReaction .
+piero:LeaveBackwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:BackwardInReaction ;
+	rdfs:subPropertyOf piero:LeaveInReaction .
+piero:hasLeaveForwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasForwardRpair ;
+	rdfs:subPropertyOf piero:hasLeaveRpair .
+piero:hasLeaveBackwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasBackwardRpair ;
+	rdfs:subPropertyOf piero:hasLeaveRpair .
+piero:LigaseForwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:ForwardInReaction ;
+	rdfs:subPropertyOf piero:LigaseInReaction .
+piero:LigaseBackwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:BackwardInReaction ;
+	rdfs:subPropertyOf piero:LigaseInReaction .
+piero:hasLigaseForwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasForwardRpair ;
+	rdfs:subPropertyOf piero:hasLigaseRpair .
+piero:hasLigaseBackwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasBackwardRpair ;
+	rdfs:subPropertyOf piero:hasLigaseRpair .
+piero:TransForwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:ForwardInReaction ;
+	rdfs:subPropertyOf piero:TransInReaction .
+piero:TransBackwardInReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:BackwardInReaction ;
+	rdfs:subPropertyOf piero:TransInReaction .
+piero:hasTransForwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasForwardRpair ;
+	rdfs:subPropertyOf piero:hasTransRpair .
+piero:hasTransBackwardRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range kegg:rpair ;
+	rdfs:subPropertyOf piero:hasBackwardRpair ;
+	rdfs:subPropertyOf piero:hasTransRpair .
+## In MolecularFunction
+piero:hasKeggEnzyme rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:ec ;
+	rdfs:range kegg:enzyme .
+piero:inEc rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:molecular_function ;
+	rdfs:domain piero:go ;
+	rdfs:domain piero:iubmb ;
+	rdfs:range piero:ec .
+piero:hasGo rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:ec ;
+	rdfs:range piero:go .
+piero:hasKeggEnzyme rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:ec ;
+	rdfs:range kegg:enzyme .
+piero:hasIubmb rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:ec ;
+	rdfs:range piero:iubmb .
+## Object <=> Process
+# Lv. 1
+piero:catalyzeProperty rdf:type owl:ObjectProperty .
+piero:catalyzedBy rdf:type owl:AsymmetricProperty ,
+		owl:ObjectProperty ,
+		owl:TransitiveProperty ;
+	owl:inverseOf piero:catalyzes ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range piero:gene_product ;
+	rdfs:subPropertyOf piero:catalyzeProperty .
+piero:catalyzes rdf:type owl:AsymmetricProperty ,
+		owl:ObjectProperty ,
+		owl:TransitiveProperty ;
+	owl:inverseOf piero:catalyzedBy ;
+	rdfs:domain piero:gene_product ;
+	rdfs:range kegg:reaction ;
+	rdfs:subPropertyOf piero:catalyzeProperty .
+piero:hasReactant rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:compound ;
+	owl:inverseOf piero:inRpair .
+piero:inRpair rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:compound ;
+	rdfs:range kegg:rpair ;
+	owl:inverseOf piero:hasReactant .
+piero:hasReactantKcfs rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:rdm ;
+	rdfs:range piero:kcfs ;
+	owl:inverseOf piero:inRdm .
+piero:inRdm rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:kcfs ;
+	rdfs:range piero:rdm ;
+	owl:inverseOf piero:hasReactantKcfs .
+piero:hasSubstructure rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:substructure_conversion ;
+	rdfs:range piero:substructure .
+# Lv. 2
+piero:hasReactantInSideA rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:compound ;
+	owl:inverseOf piero:inRpairInSideA ;
+	rdfs:subPropertyOf piero:hasReactant .
+piero:hasReactantInSideB rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rpair ;
+	rdfs:range kegg:compound ;
+	owl:inverseOf piero:inRpairInSideB ;
+	rdfs:subPropertyOf piero:hasReactant .
+piero:inRpairInSideA rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:compound ;
+	rdfs:range kegg:rpair ;
+	owl:inverseOf piero:hasReactantInSideA ;
+	rdfs:subPropertyOf piero:inRpair .
+piero:inRpairInSideB rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:compound ;
+	rdfs:range kegg:rpair ;
+	owl:inverseOf piero:hasReactantInSideB ;
+	rdfs:subPropertyOf piero:inRpair .
+piero:hasReactantKcfsInSideA rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:rdm ;
+	rdfs:range piero:kcfs ;
+	owl:inverseOf piero:inRdmInSideA ;
+	rdfs:subPropertyOf piero:hasReactantKcfs .
+piero:hasReactantKcfsInSideB rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:rdm ;
+	rdfs:range piero:kcfs ;
+	owl:inverseOf piero:inRdmInSideB ;
+	rdfs:subPropertyOf piero:hasReactantKcfs .
+piero:inRdmInSideA rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:kcfs ;
+	rdfs:range piero:rdm ;
+	rdfs:subPropertyOf piero:inRdm .
+piero:inRdmInSideB rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:kcfs ;
+	rdfs:range piero:rdm ;
+	rdfs:subPropertyOf piero:inRdm .
+piero:hasSubstructureInSideA rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:substructure_conversion ;
+	rdfs:range piero:substructure ;
+	rdfs:subPropertyOf piero:hasSubstructure .
+piero:hasSubstructureInSideB rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:substructure_conversion ;
+	rdfs:range piero:substructure ;
+	rdfs:subPropertyOf piero:hasSubstructure .
+piero:inConversionInSideA rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:substructure ;
+	rdfs:range piero:substructure_conversion ;
+	rdfs:subPropertyOf piero:inFGC .
+piero:inConversionInSideB rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:substructure ;
+	rdfs:range piero:substructure_conversion ;
+	rdfs:subPropertyOf piero:inFGC .
+## Object <=> MolecularFunction
+# Lv. 1
+piero:mediateProperty rdf:type owl:ObjectProperty .
+piero:mediatedBy rdf:type owl:AsymmetricProperty ,
+		owl:ObjectProperty ,
+		owl:TransitiveProperty ;
+	owl:inverseOf piero:mediates ;
+	rdfs:domain piero:ec ;
+	rdfs:range piero:gene_product ;
+	rdfs:subPropertyOf piero:mediateProperty .
+piero:mediates rdf:type owl:AsymmetricProperty ,
+		owl:ObjectProperty ,
+		owl:TransitiveProperty ;
+	owl:inverseOf piero:mediatedBy ;
+	rdfs:domain piero:gene_product ;
+	rdfs:range piero:ec ;
+	rdfs:subPropertyOf piero:mediateProperty .
+piero:hasSubstructure rdf:type owl:ObjectProperty ;
+	rdfs:range piero:substructure .
+piero:inReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range piero:reaction .
+piero:hasGeneProduct rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:ko ;
+	rdfs:range piero:gene_product .
+piero:inKo rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:gene_product ;
+	rdfs:range kegg:ko .
+## Process <=> MolecularFunction
+# Lv. 1
+piero:hasKeggReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:reaction ;
+	rdfs:range kegg:reaction ;
+	owl:inverseOf piero:hasTransformation .
+piero:inTransformation rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:rclass ;
+	rdfs:domain piero:substructure ;
+	rdfs:range piero:transformation .
+piero:inReaction rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range piero:reaction .
+piero:hasTransformation rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:range piero:transformation ;
+	owl:inverseOf piero:hasKeggReaction .
+piero:inKeggReaction rdf:type owl:ObjectProperty ;
+	rdfs:range kegg:reaction ;
+	rdfs:domain piero:transformation .
+## Backward RDM
+piero:reverseRdm rdf:type owl:ObjectProperty ;
+	rdfs:domain piero:rdm ;
+	rdfs:range piero:rdm ;
+	owl:symmetricProperty piero:reverseRdm ;
+	rdfs:subPropertyOf owl:topObjectProperty .
+piero:hasEquation rdf:type owl:ObjectProperty ;
+	rdfs:domain kegg:reaction ;
+	rdfs:subPropertyOf owl:topObjectProperty .
+# }}}
+
+# {{{ Annotation Property
+## ??? <=> Literal
+piero:hasAnnotation rdf:type owl:AnnotationProperty;
+	rdfs:domain kegg:enzyme ;
+	rdfs:domain kegg:reaction ;
+	rdfs:domain kegg:rpair ;
+	rdfs:domain kegg:rclass ;
+	rdfs:domain kegg:ko ;
+	rdfs:domain kegg:compound ;
+	rdfs:range rdfs:Literal ;
+	rdfs:range xsd:integer ;
+	rdfs:range rdfs:Container .
+piero:hasCommentAnnotation rdf:type owl:AnnotationProperty;
+	rdfs:domain kegg:reaction ;
+	rdfs:domain kegg:enzyme ;
+	rdfs:range rdfs:Container ;
+	rdfs:subPropertyOf piero:hasAnnotation .
+piero:hasEquationAnnotation rdf:type owl:AnnotationProperty;
+	rdfs:domain kegg:reaction ;
+	rdfs:range rdfs:Literal ;
+	rdfs:subPropertyOf piero:hasAnnotation .
+piero:hasDefinitionAnnotation rdf:type owl:AnnotationProperty;
+	rdfs:domain kegg:reaction ;
+	rdfs:domain kegg:ko ;
+	rdfs:range rdfs:Literal ;
+	rdfs:subPropertyOf piero:hasAnnotation .
+piero:hasSysnameAnnotation rdf:type owl:AnnotationProperty;
+	rdfs:domain kegg:enzyme ;
+	rdfs:range rdfs:Container ;
+	rdfs:subPropertyOf piero:hasAnnotation .
+piero:hasClassAnnotation rdf:type owl:AnnotationProperty;
+	rdfs:domain kegg:enzyme ;
+	rdfs:range rdfs:Container ;
+	rdfs:subPropertyOf piero:hasAnnotation .
+piero:hasTypeAnnotation rdf:type owl:AnnotationProperty;
+	rdfs:domain kegg:rpair ;
+	rdfs:range rdfs:Container ;
+	rdfs:subPropertyOf piero:hasAnnotation .
+piero:hasRdmAnnotation rdf:type owl:AnnotationProperty;
+	rdfs:domain kegg:rpair ;
+	rdfs:range rdfs:Container ;
+	rdfs:subPropertyOf piero:hasAnnotation .
+piero:hasRdmCount rdf:type owl:AnnotationProperty;
+	rdfs:domain kegg:rpair ;
+	rdfs:range xsd:integer ;
+	rdfs:subPropertyOf piero:hasAnnotation .
+piero:standardRdmOrientation rdf:type owl:AnnotationProperty;
+	rdfs:domain kegg:rpair ;
+	rdfs:range xsd:Literal ;
+	rdfs:subPropertyOf piero:hasAnnotation .
+
+## Parent <=> Child
+piero:hasParent rdf:type owl:ObjectProperty ;
+	rdfs:domain owl:Thing ;
+	rdfs:range owl:Thing ;
+	rdfs:subPropertyOf rdfs:subClassOf ;
+	owl:inverseOf piero:hasChild .
+piero:hasChild rdf:type owl:ObjectProperty ;
+	rdfs:domain owl:Thing ;
+	rdfs:range owl:Thing ;
+	owl:inverseOf piero:hasParent .
+## Level in TREE
+piero:levelProperty rdf:type owl:AnnotationProperty ;
+	rdfs:domain owl:Class ;
+	rdfs:range xsd:integer .
+piero:levelInSubstructure rdf:type owl:AnnotationProperty ;
+	rdfs:domain piero:substructure ;
+	rdfs:range xsd:integer ;
+	rdfs:subPropertyOf piero:levelProperty .
+piero:levelInSubstructureeConversion rdf:type owl:AnnotationProperty ;
+	rdfs:domain piero:substructure_conversion ;
+	rdfs:range xsd:integer ;
+	rdfs:subPropertyOf piero:levelProperty .
+piero:levelInKcfs rdf:type owl:AnnotationProperty ;
+	rdfs:domain piero:kcfs ;
+	rdfs:range xsd:integer ;
+	rdfs:subPropertyOf piero:levelProperty .
+piero:levelInRdm rdf:type owl:AnnotationProperty ;
+	rdfs:domain piero:rdm ;
+	rdfs:range xsd:integer ;
+	rdfs:subPropertyOf piero:levelProperty .
+piero:levelInReaction rdf:type owl:AnnotationProperty ;
+	rdfs:domain piero:reaction ;
+	rdfs:range xsd:integer ;
+	rdfs:subPropertyOf piero:levelProperty .
+piero:levelInTransformation rdf:type owl:AnnotationProperty ;
+	rdfs:domain piero:transformation ;
+	rdfs:range xsd:integer ;
+	rdfs:subPropertyOf piero:levelProperty .
+# }}}
